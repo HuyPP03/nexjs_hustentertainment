@@ -3,7 +3,7 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
@@ -15,6 +15,16 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
+    },
+    phone: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    admin: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

@@ -3,6 +3,11 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        // Add Firebase Storage domain pattern
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+      },
+      {
         protocol: "https",
         hostname: "*.googleusercontent.com",
       },
