@@ -3,15 +3,15 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Tippy from "@tippyjs/react/headless";
 import Image from "next/image";
-// import { ArrowLeftOnRectangle } from "@heroicons/react/24/solid";
 export function Header() {
-  //   const { data: session, status, update } = useSession();
-  //   let userName = session?.user.name || session?.user.email;
-  //   const userEmail = session?.user.email;
-  //   const userAvatar = session?.user.image;
-  //   if (userName && userName.includes(" ")) {
-  //     userName = userName.split(" ")[userName.split(" ").length - 1];
-  //   }
+  const { data: session, status, update } = useSession();
+  let userName = session?.user.name || session?.user.email;
+  const userEmail = session?.user.email;
+  const userAvatar = session?.user.image;
+  if (userName && userName.includes(" ")) {
+    userName = userName.split(" ")[userName.split(" ").length - 1];
+  }
+
   return (
     <header className="grid items-center grid-cols-4 py-6 border-b-2 sticky top-0 bg-white z-50">
       <Link className="text-primary font-semibold text-2xl" href="/">
@@ -24,7 +24,7 @@ export function Header() {
         <Link href="contact">Contact</Link>
       </nav>
       <nav className="flex items-center gap-4 justify-end text-gray-500 font-semibold">
-        {true && (
+        {status === "unauthenticated" && (
           <>
             <Link
               href="/register"
@@ -40,7 +40,7 @@ export function Header() {
             </Link>
           </>
         )}
-        {false && (
+        {status === "authenticated" && (
           <>
             <Image
               src={"/notifications.png"}
@@ -86,6 +86,7 @@ export function Header() {
                     />
                     Profile
                   </Link>
+
                   <div
                     onClick={() => signOut()}
                     className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 py-2 border-b-2"

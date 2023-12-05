@@ -1,6 +1,19 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import MenuItem from "../Menu/MenuItem";
 import Link from "next/link";
 export const HomeMenu = () => {
+  const [lastestTickets, setLastestTickets] = useState([]);
+  useEffect(() => {
+    fetch("/api/menu-items").then((res) => {
+      res.json().then((menuItems) => {
+        const lastestTickets = menuItems.slice(-7);
+        setLastestTickets(lastestTickets);
+      });
+    });
+  }, []);
+
   return (
     <section>
       <div className="text-center">
@@ -13,14 +26,10 @@ export const HomeMenu = () => {
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
+        {lastestTickets.length > 0 &&
+          lastestTickets.map((ticket) => (
+            <MenuItem key={ticket._id} {...ticket} />
+          ))}
       </div>
       <div className="flex items-center justify-center py-6">
         <Link
